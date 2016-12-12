@@ -16,6 +16,9 @@ using ONetworkTalk.Server;
 
 namespace ONetworkTalk.Server
 {
+    /// <summary>
+    /// 服务端消息派发器，消息经由此处派发给实际的消息处理器
+    /// </summary>
     public class MessageDispatcher
     {
         private BasicController basicController;

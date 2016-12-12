@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Core
 {
+    /// <summary>
+    /// 服务端引擎，组件核心连接处，所有（目前及未来扩展接口功能）可访问接口均通过此类获取
+    /// </summary>
     public class OServerEngine
     {
-        public IBasicHandler basicHandler;
-        public ICustomizeHandler handler;
-        private RingObjManager<ChannelServerHandler> ringHandlers;
         private MultithreadEventLoopGroup bossGroup;
         private MultithreadEventLoopGroup workerGroup;
         private UserManager userManager;
@@ -40,6 +40,7 @@ namespace ONetworkTalk.Core
             workerGroup = new MultithreadEventLoopGroup();
             MessageDispatcher dispatcher = new MessageDispatcher(this.BasicController, basicHandler, handler);
             List<ChannelServerHandler> handlers = new List<ChannelServerHandler>();
+            RingObjManager<ChannelServerHandler> ringHandlers = null;
             if (isStrictOrder)//此处相比默认handler增加了工作线程，默认工作线程为cpu核心*2
             {
                 for (int i = 0; i < workThreadCount; i++)
@@ -48,6 +49,11 @@ namespace ONetworkTalk.Core
                     handlers.Add(new ChannelServerHandler(this.userManager, workerEngine));
                 }
                 ringHandlers = new RingObjManager<ChannelServerHandler>(handlers);
+            }
+            else
+            {
+                var cChannelHandlers = new List<ChannelServerHandler>() { new ChannelServerHandler(this.userManager) };
+                ringHandlers = new RingObjManager<ChannelServerHandler>(cChannelHandlers);
             }
             var bootstrap = new ServerBootstrap();
             bootstrap
@@ -59,19 +65,13 @@ namespace ONetworkTalk.Core
                 {
                     IChannelPipeline pipeline = channel.Pipeline;
                     pipeline.AddLast(OFrameDecoder.NewOFrameDecoder());
-                    if (isStrictOrder)
-                    {
-                        pipeline.AddLast(ringHandlers.GetNext());
-                    }
-                    else
-                    {
-                        pipeline.AddLast(new ChannelServerHandler(this.userManager));
-                    }
+                    pipeline.AddLast(ringHandlers.GetNext());
                 }));
 
             IChannel bootstrapChannel = await bootstrap.BindAsync(port);
 
         }
+
         public void Close()
         {
             Task.WaitAll(bossGroup.ShutdownGracefullyAsync(), workerGroup.ShutdownGracefullyAsync());

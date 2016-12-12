@@ -14,9 +14,12 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Handler
 {
+    /// <summary>
+    /// dotnetty 服务端消息读取器，此处将消息封装成MessagePacket，再交由MessageDispatcher处理
+    /// </summary>
     public class ChannelServerHandler : ChannelHandlerAdapter
     {
-        WorkerEngine<RequestInfo> workerEngine;
+        private WorkerEngine<RequestInfo> workerEngine;
 
         public UserManager UserManager { get; private set; }
 

@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Server
 {
+    /// <summary>
+    /// 所有登录到此服务器客户端channel集合
+    /// </summary>
     public class ClientChannelGroup : IChannelGroup
     {
         static int nextId;

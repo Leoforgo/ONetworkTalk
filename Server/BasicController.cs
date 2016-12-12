@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Server
 {
+    /// <summary>
+    /// 服务端消息发送控制器
+    /// </summary>
     public class BasicController
     {
         internal UserManager userManager;

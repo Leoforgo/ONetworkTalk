@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Client
 {
+    /// <summary>
+    ///客户端消息派发器，消息经由此处派发给实际的消息处理器
+    /// </summary>
     public class MessageBus
     {
         private HotDictionary<string, BlobItem> hotDic = new HotDictionary<string, BlobItem>();
@@ -63,7 +66,7 @@ namespace ONetworkTalk.Client
                     }
                     else
                     {
-                        if (messagePacket.MessageHeader.MessageType==MessageType.Ack_Req)
+                        if (messagePacket.MessageHeader.MessageType == MessageType.Ack_Req)
                         {
                             this.ResponseAck(requestInfo.Channel, messagePacket);
                             this.handler.Handle(messagePacket.MessageHeader.SourceUserID, messagePacket.ContractID, messagePacket.BodyContent);
@@ -71,7 +74,7 @@ namespace ONetworkTalk.Client
                         else
                         {
                             if (messagePacket.MessageHeader.MessageType == MessageType.Ack_Resp
-                                || messagePacket.MessageHeader.MessageType == MessageType.Query_Resp 
+                                || messagePacket.MessageHeader.MessageType == MessageType.Query_Resp
                                 || messagePacket.MessageHeader.MessageType == MessageType.LoginResp)
                             {
                                 if (this.messageBag.ContainsKey(messagePacket.MessageHeader.MessageID))

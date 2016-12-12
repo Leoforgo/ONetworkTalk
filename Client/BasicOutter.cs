@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace ONetworkTalk.Client
 {
+    /// <summary>
+    /// 客户端消息发送
+    /// </summary>
     public class BasicOutter
     {
         private MessageBus messageBus;

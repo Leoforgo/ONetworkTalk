@@ -65,6 +65,9 @@ namespace ONetworkTalk.Server
         }
     }
 
+    /// <summary>
+    /// 客户端登录验证后集合
+    /// </summary>
     public class UserSet
     {
         //<userID,IChannel>

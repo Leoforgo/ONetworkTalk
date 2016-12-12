@@ -16,7 +16,10 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Core
 {
-    class OClientEngine
+    /// <summary>
+    /// 客户端引擎，组件核心连接处，所有（目前及未来扩展接口功能）可访问接口均通过此类获取
+    /// </summary>
+    public class OClientEngine
     {
         public BasicOutter BasicOutter { get; private set; }
         private ChannelClientHandler channelClientHandler;

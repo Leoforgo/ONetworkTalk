@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace ONetworkTalk.Utility
 {
+    /// <summary>
+    /// 生产/消费模型实现，可有多个/单个生产者，也可由多个/多个消费者
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class WorkerEngine<T>
     {
         private Action<T> workProcess;
@@ -23,14 +27,14 @@ namespace ONetworkTalk.Utility
                 this.workerThreadCount = value;
             }
         }
+        public WorkerEngine(Action<T> action) : this(1000, 1, action)
+        {
+        }
         public WorkerEngine(int capacity, int workThreadCount, Action<T> action)
         {
             this.blockingCollection = new BlockingCollection<T>(capacity);
             this.WorkerThreadCount = workThreadCount;
             this.workProcess = action;
-        }
-        public WorkerEngine(Action<T> action) : this(1000, 1, action)
-        {
         }
         public void Add(T t)
         {
