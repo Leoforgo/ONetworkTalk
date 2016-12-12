@@ -1,0 +1,30 @@
+syntax = "proto3";
+package ONetworkTalk.Contract;
+
+
+//登录 C-->S
+ message LoginContract { 
+    string Uid=1;//用户名
+    string Pwd=2;//密码
+	string VerCode=3;//验证码
+}
+
+//登录结果
+ message LoginResultContract{
+    sint32 Result=1;//登录结果
+	string Failure=2;//失败原因
+}
+
+//blob 分块发送
+ message BlobContract{
+    bool IsLast=1;//是否是最后
+	sint32 BlobID=2;
+	sint32 FragmentIndex=3;
+	bytes Fragment=4;
+ }
+
+ message ChatContent{
+  string Content=1;
+ }
+
+

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B4B42E0-B355-4CD7-9FD4-C995050578AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ONetworkTalk</RootNamespace>
+    <AssemblyName>ONetworkTalk</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetty.Buffers">
+      <HintPath>..\..\..\..\DotNetty\src\DotNetty.Transport\bin\Debug\net451\DotNetty.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Codecs">
+      <HintPath>..\..\..\..\DotNetty\src\DotNetty.Codecs\bin\Debug\net451\DotNetty.Codecs.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Common">
+      <HintPath>..\..\..\..\DotNetty\src\DotNetty.Common\bin\Debug\net451\DotNetty.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Handlers">
+      <HintPath>..\..\..\..\DotNetty\src\DotNetty.Handlers\bin\Debug\net451\DotNetty.Handlers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Transport">
+      <HintPath>..\..\..\..\DotNetty\src\DotNetty.Transport\bin\Debug\net451\DotNetty.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\..\..\PureGameServer\packages\Google.Protobuf.3.1.0\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\BasicOutter.cs" />
+    <Compile Include="Client\MessageBus.cs" />
+    <Compile Include="Codecs\MessageHeader.cs" />
+    <Compile Include="Codecs\MessagePacket.cs" />
+    <Compile Include="Codecs\OFrameDecoder.cs" />
+    <Compile Include="Codecs\RequestInfo.cs" />
+    <Compile Include="Contract\OServerContract.cs" />
+    <Compile Include="Core\OClientEngine.cs" />
+    <Compile Include="Core\OServerEngine.cs" />
+    <Compile Include="Handler\ChannelClientHandler.cs" />
+    <Compile Include="Handler\ChannelServerHandler.cs" />
+    <Compile Include="Handler\ComplexCustomizeHandler.cs" />
+    <Compile Include="Handler\IBasicHandler.cs" />
+    <Compile Include="Handler\ICustomizeHandler.cs" />
+    <Compile Include="Handler\IIntegratedCustomizeHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\BasicController.cs" />
+    <Compile Include="Server\ClientChannelGroup.cs" />
+    <Compile Include="Server\MessageDispatcher.cs" />
+    <Compile Include="Server\UserManager.cs" />
+    <Compile Include="Utility\HotDictionary.cs" />
+    <Compile Include="Utility\Enums.cs" />
+    <Compile Include="Utility\MessageCreater.cs" />
+    <Compile Include="Utility\RingObjManager.cs" />
+    <Compile Include="Utility\Utils.cs" />
+    <Compile Include="Utility\WorkerEngine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Contract\pb\OServerContract.proto" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
