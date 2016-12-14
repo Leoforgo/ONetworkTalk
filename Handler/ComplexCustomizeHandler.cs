@@ -10,7 +10,9 @@ namespace ONetworkTalk.Handler
     public class ComplexCustomizeHandler : ICustomizeHandler
     {
         private Dictionary<int, IIntegratedCustomizeHandler> handlerDic = new Dictionary<int, IIntegratedCustomizeHandler>();
+
         private List<IIntegratedCustomizeHandler> handlers = new List<IIntegratedCustomizeHandler>();
+
         public ComplexCustomizeHandler(IEnumerable<IIntegratedCustomizeHandler> handler)
         {
             foreach (IIntegratedCustomizeHandler current in handler)

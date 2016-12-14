@@ -12,8 +12,8 @@ namespace ONetworkTalk.Handler
     /// </summary>
     public interface ICustomizeHandler
     {
-        void Handle(string sourceUserID, int contractaID, byte[] info);
+        void Handle(string sourceUserID, int contractID, byte[] info);
 
-        byte[] HandleQuery(string sourceUserID, int contractaID, byte[] info);
+        byte[] HandleQuery(string sourceUserID, int contractID, byte[] info);
     }
 }
