@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ONetworkTalk.Utility.ObjectManagement;
 
 namespace ONetworkTalk.Core
 {
@@ -40,7 +41,7 @@ namespace ONetworkTalk.Core
             workerGroup = new MultithreadEventLoopGroup();
             MessageDispatcher dispatcher = new MessageDispatcher(this.BasicController, basicHandler, handler);
             List<ChannelServerHandler> handlers = new List<ChannelServerHandler>();
-            RingObjManager<ChannelServerHandler> ringHandlers = null;
+            RingObject<ChannelServerHandler> ringHandlers = null;
             if (isStrictOrder)//此处相比默认handler增加了工作线程，默认工作线程为cpu核心*2
             {
                 for (int i = 0; i < workThreadCount; i++)
@@ -48,12 +49,12 @@ namespace ONetworkTalk.Core
                     WorkerEngine<RequestInfo> workerEngine = new WorkerEngine<RequestInfo>(3000, 1, dispatcher.Process);
                     handlers.Add(new ChannelServerHandler(this.userManager, workerEngine));
                 }
-                ringHandlers = new RingObjManager<ChannelServerHandler>(handlers);
+                ringHandlers = new RingObject<ChannelServerHandler>(handlers);
             }
             else
             {
                 var cChannelHandlers = new List<ChannelServerHandler>() { new ChannelServerHandler(this.userManager) };
-                ringHandlers = new RingObjManager<ChannelServerHandler>(cChannelHandlers);
+                ringHandlers = new RingObject<ChannelServerHandler>(cChannelHandlers);
             }
             var bootstrap = new ServerBootstrap();
             bootstrap

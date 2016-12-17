@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using System.IO;
 using ONetworkTalk.Server;
+using ONetworkTalk.Utility.ObjectManagement;
 
 namespace ONetworkTalk.Server
 {

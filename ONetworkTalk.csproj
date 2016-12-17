@@ -79,10 +79,11 @@
     <Compile Include="Server\ClientChannelGroup.cs" />
     <Compile Include="Server\MessageDispatcher.cs" />
     <Compile Include="Server\UserManager.cs" />
-    <Compile Include="Utility\HotDictionary.cs" />
+    <Compile Include="Utility\ObjectManagement\HotDictionary.cs" />
     <Compile Include="Utility\Enums.cs" />
+    <Compile Include="Utility\ObjectManagement\PoolObject.cs" />
     <Compile Include="Utility\MessageCreater.cs" />
-    <Compile Include="Utility\RingObjManager.cs" />
+    <Compile Include="Utility\ObjectManagement\RingObject.cs" />
     <Compile Include="Utility\Utils.cs" />
     <Compile Include="Utility\WorkerEngine.cs" />
   </ItemGroup>
