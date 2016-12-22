@@ -20,19 +20,20 @@ namespace ONetworkTalk.Handler
     public class ChannelServerHandler : ChannelHandlerAdapter
     {
         private WorkerEngine<RequestInfo> workerEngine;
+        private MessageDispatcher messageDispatcher;
 
         public UserManager UserManager { get; private set; }
 
-        public ChannelServerHandler(UserManager userManager)
+        public ChannelServerHandler(UserManager userManager, MessageDispatcher messageDispatcher)
         {
             this.UserManager = userManager;
+            this.messageDispatcher = messageDispatcher;
         }
 
         public ChannelServerHandler(UserManager userManager, WorkerEngine<RequestInfo> workerEngine)
         {
             this.UserManager = userManager;
             this.workerEngine = workerEngine;
-            this.workerEngine.Start();
         }
 
         public IByteBuffer AcceptInboundMessage(object msg)
@@ -48,7 +49,14 @@ namespace ONetworkTalk.Handler
                 if (buffer != null)
                 {
                     MessagePacket message = new MessagePacket(buffer);
-                    this.workerEngine.Add(new RequestInfo(ctx.Channel, ctx, message));
+                    if (this.messageDispatcher != null)
+                    {
+                        this.messageDispatcher.Process(new RequestInfo(ctx.Channel, ctx, message));
+                    }
+                    else
+                    {
+                        this.workerEngine.Add(new RequestInfo(ctx.Channel, ctx, message));
+                    }
                 }
                 else
                 {
