@@ -39,10 +39,11 @@ namespace ONetworkTalk.Core
                     IChannelPipeline pipeline = channel.Pipeline;
                     //pipeline.AddLast(new LoggingHandler());
                     pipeline.AddLast(OFrameDecoder.NewOFrameDecoder());
+                    pipeline.AddLast(this.channelClientHandler);
                     pipeline.AddLast();
                 }));
 
-            IChannel clientChannel = await bootstrap.ConnectAsync(new IPEndPoint(long.Parse(ip), port));
+            IChannel clientChannel = await bootstrap.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), port));
         }
 
         public LoginResultContract Login(string uid, string pwd, string verCode)
