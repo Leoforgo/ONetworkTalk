@@ -24,16 +24,21 @@ namespace ONetworkTalk.Core
         private MultithreadEventLoopGroup workerGroup;
         private UserManager userManager;
         private int workThreadCount;
-        private bool isStrictOrder;
+        private bool useDefaultThread;
         public BasicController BasicController { get; private set; }
-        public OServerEngine(int workThreadCount = 100, bool isStrictOrder = false)
+
+        private OServerEngine(bool useDefaultThread, int workThreadCount = 100)
         {
             ThreadPool.SetMinThreads(workThreadCount, Environment.ProcessorCount * 2);
+            this.useDefaultThread = useDefaultThread;
             this.workThreadCount = workThreadCount;
-            this.isStrictOrder = isStrictOrder;
             this.userManager = new UserManager();
             this.BasicController = new BasicController(this.userManager);
         }
+
+        public OServerEngine() : this(true) { }
+
+        public OServerEngine(int workThreadCount) : this(false, workThreadCount) { }
 
         public async Task RunEngineAsync(int port, IBasicHandler basicHandler, ICustomizeHandler handler)
         {
@@ -42,18 +47,19 @@ namespace ONetworkTalk.Core
             MessageDispatcher dispatcher = new MessageDispatcher(this.BasicController, basicHandler, handler);
             List<ChannelServerHandler> handlers = new List<ChannelServerHandler>();
             RingObject<ChannelServerHandler> ringHandlers = null;
-            if (isStrictOrder)//此处相比默认handler增加了工作线程，默认工作线程为cpu核心*2
+            if (!useDefaultThread)//此处相比默认handler增加了工作线程，默认工作线程为cpu核心*2
             {
                 for (int i = 0; i < workThreadCount; i++)
                 {
                     WorkerEngine<RequestInfo> workerEngine = new WorkerEngine<RequestInfo>(3000, 1, dispatcher.Process);
+                    workerEngine.Start();
                     handlers.Add(new ChannelServerHandler(this.userManager, workerEngine));
                 }
                 ringHandlers = new RingObject<ChannelServerHandler>(handlers);
             }
             else
             {
-                var cChannelHandlers = new List<ChannelServerHandler>() { new ChannelServerHandler(this.userManager) };
+                var cChannelHandlers = new List<ChannelServerHandler>() { new ChannelServerHandler(this.userManager, dispatcher) };
                 ringHandlers = new RingObject<ChannelServerHandler>(cChannelHandlers);
             }
             var bootstrap = new ServerBootstrap();
