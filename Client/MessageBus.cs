@@ -40,6 +40,7 @@ namespace ONetworkTalk.Client
                 }
                 else
                 {
+                    #region Blob
                     if (messagePacket.MessageHeader.MessageType == MessageType.Blob)
                     {
                         BlobContract blobContract = BlobContract.Parser.ParseFrom(messagePacket.BodyContent);
@@ -65,6 +66,9 @@ namespace ONetworkTalk.Client
                             this.handler.Handle(messagePacket.MessageHeader.SourceUserID, messagePacket.ContractID, info);
                         }
                     }
+                    #endregion
+
+                    #region Ack
                     else
                     {
                         if (messagePacket.MessageHeader.MessageType == MessageType.Ack_Req)
@@ -93,6 +97,7 @@ namespace ONetworkTalk.Client
                             }
                         }
                     }
+                    #endregion
                 }
             }
             catch (Exception ex)
