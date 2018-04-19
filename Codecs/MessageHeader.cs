@@ -13,7 +13,7 @@ namespace ONetworkTalk.Codecs
     /// Client         startIndex:0,endIndex:1
     /// MessageType    startIndex:1,endIndex:2
     /// MessageID      startIndex:2,endIndex:6
-    /// MessageBodyLen startIndex:6,endIndex:10
+    /// MessageBodyLen startIndex:6,endIndex:10 
     /// SourceUserID   startIndex:10,endIndex:18(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
     /// DestUserID     startIndex:18,endIndex:26(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
     /// </summary>
