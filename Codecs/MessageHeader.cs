@@ -11,11 +11,11 @@ namespace ONetworkTalk.Codecs
     /// <summary>
     /// 消息头
     /// Client         startIndex:0,endIndex:1
-    /// MessageType    startIndex:2,endIndex:3
-    /// MessageID      startIndex:4,endIndex:7
-    /// MessageBodyLen startIndex:8,endIndex:11
-    /// SourceUserID   startIndex:12,endIndex:19(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
-    /// DestUserID     startIndex:20,endIndex:27(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
+    /// MessageType    startIndex:1,endIndex:2
+    /// MessageID      startIndex:2,endIndex:6
+    /// MessageBodyLen startIndex:6,endIndex:10
+    /// SourceUserID   startIndex:10,endIndex:18(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
+    /// DestUserID     startIndex:19,endIndex:27(当用户名最大长度为8)  具体取决于GloblParams.MaxUserLength
     /// </summary>
     public class MessageHeader
     {
