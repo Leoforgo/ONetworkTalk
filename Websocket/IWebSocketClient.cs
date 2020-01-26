@@ -1,4 +1,4 @@
-﻿namespace Coldairarrow.DotNettySocket
+﻿namespace ONetworkTalk.Websocket
 {
     /// <summary>
     /// WebSocket客户端
