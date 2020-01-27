@@ -11,7 +11,7 @@ namespace ONetworkTalk.Utility
     /// 生产/消费模型实现，可有多个/单个生产者，也可由多个/多个消费者
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class WorkerEngine<T>
+    public class WorkerEngine<T>:IWorkEngine<T>
     {
         private Action<T> workProcess;
         private BlockingCollection<T> blockingCollection;
@@ -36,6 +36,11 @@ namespace ONetworkTalk.Utility
             this.WorkerThreadCount = workThreadCount;
             this.workProcess = action;
         }
+
+        public WorkerEngine()
+        {
+        }
+
         public void Add(T t)
         {
             this.blockingCollection.Add(t);
